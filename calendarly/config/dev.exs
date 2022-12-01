@@ -26,7 +26,16 @@ config :calendarly, CalendarlyWeb.Endpoint,
   secret_key_base: "adHfduSe8WxjKNoHHr7wQp5+44citPuXLV575zSxn77PFkmKNNSOOvK4adZNcYgl",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    npx: [
+      "tailwindcss",
+      "--input=css/app.css",
+      "--output=../priv/static/assets/app.css",
+      "--postcss",
+      "--watch",
+      cd: Path.expand("../assets", __DIR__)
+
+    ]
   ]
 
 # ## SSL Support
