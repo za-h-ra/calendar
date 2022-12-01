@@ -30,8 +30,17 @@ import topbar from "../vendor/topbar";
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
+let hooks = {};
 let liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
+  hooks: hooks,
+  dom: {
+    onBeforeElUpdated(from, to) {
+      if (from._x_dataStack) {
+        window.Alphine.clone(from, to);
+      }
+    },
+  },
 });
 
 // Show progress bar on live navigation and form submits
